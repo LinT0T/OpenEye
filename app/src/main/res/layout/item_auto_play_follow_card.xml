@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:paddingBottom="12dp"
+    android:orientation="vertical">
+
+
+    <com.lint0t.openeye.view.myview.MyImageView
+        android:id="@+id/img_avatar_auto_play_item"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@mipmap/open_eye_icon"
+        android:scaleType="centerCrop"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/tv_name_auto_play_item"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="5dp"
+        android:text="直击当下"
+        android:textColor="#000"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/img_avatar_auto_play_item"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/tv_time_auto_play_item"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:gravity="top"
+        android:paddingLeft="5dp"
+        android:text="00:35 发布："
+        app:layout_constraintLeft_toRightOf="@id/img_avatar_auto_play_item"
+        app:layout_constraintTop_toBottomOf="@id/tv_name_auto_play_item" />
+
+    <TextView
+        android:id="@+id/tv_title_auto_play_item"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:ellipsize="end"
+        android:gravity="top"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:singleLine="true"
+        android:text="生活在面包车是什么感受？"
+        android:textColor="#000"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/tv_time_auto_play_item"
+        app:layout_constraintTop_toBottomOf="@id/tv_name_auto_play_item" />
+
+    <TextView
+        android:id="@+id/tv_content_auto_play_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="2dp"
+        android:text="内容内容内容"
+        android:textColor="#000"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_time_auto_play_item" />
+
+    <com.lint0t.openeye.view.myview.MyRoundRectImageView
+        android:id="@+id/img_cover_auto_play_item"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="5dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_content_auto_play_item" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerInside"
+        android:src="@mipmap/play"
+        app:layout_constraintBottom_toBottomOf="@id/img_cover_auto_play_item"
+        app:layout_constraintLeft_toLeftOf="@id/img_cover_auto_play_item"
+        app:layout_constraintRight_toRightOf="@id/img_cover_auto_play_item"
+        app:layout_constraintTop_toTopOf="@id/img_cover_auto_play_item" />
+
+    <TextView
+        android:id="@+id/tv_duration_auto_play_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="#CC000000"
+        android:gravity="right"
+        android:padding="2dp"
+        android:text="00:00"
+        android:textColor="#fff"
+        app:layout_constraintBottom_toBottomOf="@id/img_cover_auto_play_item"
+        app:layout_constraintRight_toRightOf="@id/img_cover_auto_play_item" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/img_cover_auto_play_item">
+
+
+        <TextView
+            android:id="@+id/tv_good_auto_play_item"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_weight="1"
+            android:drawableLeft="@mipmap/good_black"
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            android:text="100" />
+
+
+        <TextView
+            android:id="@+id/tv_message_auto_play_item"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_weight="1"
+            android:drawableLeft="@mipmap/language"
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            android:text="100" />
+
+
+        <TextView
+            android:id="@+id/tv_share_auto_play_item"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_weight="1"
+            android:drawableLeft="@mipmap/share"
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            android:text="100" />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
