@@ -5,6 +5,8 @@
 ### 启动，背景来自必应每日一图，每天不同
 
  ![image](https://github.com/LinT0T/OpenEye/blob/master/gif/启动.gif)
+ 
+ ![image](https://github.com/LinT0T/OpenEye/blob/master/gif/启动2.png)
 
 ### 切换动画
 
