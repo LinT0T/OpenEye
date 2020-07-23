@@ -26,6 +26,8 @@ object OpenEyeNetwork {
     private val communityService = retrofit.create(CommunityService::class.java)
     private val messageService = retrofit.create(MessageService::class.java)
     private val tagService = retrofit.create(TagService::class.java)
+    private val allTagService = retrofit.create(AllTagService::class.java)
+    private val calenderService = retrofit.create(CalenderService::class.java)
 
     suspend fun loadImage() = coverService.getImageData().await()
 
@@ -59,6 +61,10 @@ object OpenEyeNetwork {
     suspend fun loadMoreTagRec(url: String) = tagService.getMoreTagRec(url).await()
 
     suspend fun loadTagInfo(id: String) = tagService.getTagInfo(id).await()
+
+    suspend fun loadAllTag() = allTagService.getAllTag().await()
+
+    suspend fun loadCalender(date:String) = calenderService.getCalender(date).await()
 
     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->

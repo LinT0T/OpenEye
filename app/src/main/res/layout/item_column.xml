@@ -10,7 +10,7 @@
         android:layout_height="100dp"
         android:layout_margin="5dp"
         android:scaleType="centerCrop"
-        android:src="@mipmap/me"
+        android:src="@mipmap/place_holder"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

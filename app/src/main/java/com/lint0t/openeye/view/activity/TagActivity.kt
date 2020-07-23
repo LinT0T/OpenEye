@@ -94,7 +94,7 @@ class TagActivity : AppCompatActivity() {
                 val emptyList = mutableListOf(emptyRecData)
                 viewModel.listData.clear()
                 viewModel.listData.addAll(emptyList)
-                tagRecAdapter = context?.let { TagRecAdapter(it, emptyList) }!!
+                tagRecAdapter = TagRecAdapter(context, emptyList)
                 rv_tag.adapter = tagRecAdapter
                 rv_tag.adapter?.notifyDataSetChanged()
                 refresh_layout_tag.setEnableLoadMore(false)
@@ -105,7 +105,7 @@ class TagActivity : AppCompatActivity() {
         refresh_layout_tag.setRefreshFooter(ClassicsFooter(context))
         refresh_layout_tag.setOnRefreshListener {
             refresh_layout_tag.finishRefresh()
-            viewModel.loadTagInfo(id)
+            viewModel.loadTagInfo(id?:"0")
             refresh_layout_tag.setEnableLoadMore(true)
         }
 

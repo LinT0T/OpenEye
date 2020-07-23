@@ -241,96 +241,104 @@ object Repository {
     }
 
     fun loadRec() = fire(Dispatchers.IO) {
+
+
         val response = OpenEyeNetwork.loadRec()
         val length = response.count
         val list = mutableListOf<RecData>()
-        for (i in 0 until length) {
-            if (response.itemList[i].type == "squareCardCollection") {
-                val s = response.itemList[i].data
-                val len = s.count
-                for (j in 0 until len) {
-                    try {
-                        val recData = RecData(
-                            response.itemList[i].data.header.title,
-                            s.itemList[j].data.content.data.cover.feed,
-                            s.itemList[j].data.content.data.playUrl,
-                            s.itemList[j].data.content.data.duration,
-                            s.itemList[j].data.content.data.title,
-                            "${s.itemList[j].data.content.data.author.name} / #${s.itemList[j].data.content.data.category}",
-                            s.itemList[j].data.content.data.description,
-                            s.itemList[j].data.content.data.id.toString(),
-                            s.itemList[j].data.content.data.cover.blurred,
-                            s.itemList[j].data.content.data.author.icon,
-                            "squareCardCollection",
-                            response.nextPageUrl
-                        )
-                        list.add(recData)
-                    } catch (e: java.lang.Exception) {
-                        e.printStackTrace()
-                    }
+        try {
+            for (i in 0 until length) {
+                if (response.itemList[i].type == "squareCardCollection") {
+                    val s = response.itemList[i].data
+                    val len = s.count
+                    for (j in 0 until len) {
+                        try {
+                            val recData = RecData(
+                                response.itemList[i].data.header.title,
+                                s.itemList[j].data.content.data.cover.feed,
+                                s.itemList[j].data.content.data.playUrl,
+                                s.itemList[j].data.content.data.duration,
+                                s.itemList[j].data.content.data.title,
+                                "${s.itemList[j].data.content.data.author.name} / #${s.itemList[j].data.content.data.category}",
+                                s.itemList[j].data.content.data.description,
+                                s.itemList[j].data.content.data.id.toString(),
+                                s.itemList[j].data.content.data.cover.blurred,
+                                s.itemList[j].data.content.data.author.icon,
+                                "squareCardCollection",
+                                response.nextPageUrl
+                            )
+                            list.add(recData)
+                        } catch (e: java.lang.Exception) {
+                            e.printStackTrace()
+                        }
 
+                    }
+                }
+                if (response.itemList[i].type == "textCard" && response.itemList[i].data.type != "footer2" && length > 1) {
+                    val recData = RecData(
+                        response.itemList[i].data.text,
+                        "", "", 0, "", "", "", "", "", "", response.itemList[i].type,
+                        response.nextPageUrl
+                    )
+                    list.add(recData)
+                }
+
+                if (response.itemList[i].type == "banner2") {
+                    val recData = RecData(
+                        "",
+                        response.itemList[i].data.image,
+                        "",
+                        0,
+                        response.itemList[i].data.header.title,
+                        "广告",
+                        response.itemList[i].data.header.description,
+                        "",
+                        "",
+                        response.itemList[i].data.header.icon,
+                        "squareCardCollection",
+                        response.nextPageUrl
+                    )
+                    list.add(recData)
+                }
+                if (response.itemList[i].type == "followCard") {
+                    val recData = RecData(
+                        "",
+                        response.itemList[i].data.content.data.cover.feed,
+                        response.itemList[i].data.content.data.playUrl,
+                        response.itemList[i].data.content.data.duration,
+                        response.itemList[i].data.content.data.title,
+                        "${response.itemList[i].data.content.data.author.name} / #${response.itemList[i].data.content.data.category}",
+                        response.itemList[i].data.content.data.description,
+                        response.itemList[i].data.content.data.id.toString(),
+                        response.itemList[i].data.content.data.cover.blurred,
+                        response.itemList[i].data.content.data.author.icon,
+                        response.itemList[i].type,
+                        response.nextPageUrl
+                    )
+                    list.add(recData)
+                }
+                if (response.itemList[i].type == "videoSmallCard") {
+                    val recData = RecData(
+                        "",
+                        response.itemList[i].data.cover.feed,
+                        response.itemList[i].data.playUrl,
+                        response.itemList[i].data.duration,
+                        response.itemList[i].data.title,
+                        "${response.itemList[i].data.author.name} / #${response.itemList[i].data.category}",
+                        response.itemList[i].data.description,
+                        response.itemList[i].data.id.toString(),
+                        response.itemList[i].data.cover.blurred,
+                        response.itemList[i].data.author.icon,
+                        response.itemList[i].type,
+                        response.nextPageUrl
+                    )
+                    list.add(recData)
                 }
             }
-            if (response.itemList[i].type == "textCard" && response.itemList[i].data.type != "footer2" && length > 1) {
-                val recData = RecData(
-                    response.itemList[i].data.text,
-                    "", "", 0, "", "", "", "", "", "", response.itemList[i].type,
-                    response.nextPageUrl
-                )
-                list.add(recData)
-            }
 
-            if (response.itemList[i].type == "banner2") {
-                val recData = RecData(
-                    "",
-                    response.itemList[i].data.image,
-                    "",
-                    0,
-                    response.itemList[i].data.header.title,
-                    "广告",
-                    response.itemList[i].data.header.description,
-                    "",
-                    "",
-                    response.itemList[i].data.header.icon,
-                    "squareCardCollection",
-                    response.nextPageUrl
-                )
-                list.add(recData)
-            }
-            if (response.itemList[i].type == "followCard") {
-                val recData = RecData(
-                    "",
-                    response.itemList[i].data.content.data.cover.feed,
-                    response.itemList[i].data.content.data.playUrl,
-                    response.itemList[i].data.content.data.duration,
-                    response.itemList[i].data.content.data.title,
-                    "${response.itemList[i].data.content.data.author.name} / #${response.itemList[i].data.content.data.category}",
-                    response.itemList[i].data.content.data.description,
-                    response.itemList[i].data.content.data.id.toString(),
-                    response.itemList[i].data.content.data.cover.blurred,
-                    response.itemList[i].data.content.data.author.icon,
-                    response.itemList[i].type,
-                    response.nextPageUrl
-                )
-                list.add(recData)
-            }
-            if (response.itemList[i].type == "videoSmallCard") {
-                val recData = RecData(
-                    "",
-                    response.itemList[i].data.cover.feed,
-                    response.itemList[i].data.playUrl,
-                    response.itemList[i].data.duration,
-                    response.itemList[i].data.title,
-                    "${response.itemList[i].data.author.name} / #${response.itemList[i].data.category}",
-                    response.itemList[i].data.description,
-                    response.itemList[i].data.id.toString(),
-                    response.itemList[i].data.cover.blurred,
-                    response.itemList[i].data.author.icon,
-                    response.itemList[i].type,
-                    response.nextPageUrl
-                )
-                list.add(recData)
-            }
+
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
         }
 
         Result.success(list)
@@ -852,6 +860,60 @@ object Repository {
             response.tagInfo.headerImage
         )
         Result.success(tagInfoData)
+    }
+
+    fun loadAllTag() = fire(Dispatchers.IO) {
+        val response = OpenEyeNetwork.loadAllTag()
+        val length = response.count
+        val list = mutableListOf<AllTagData>()
+        try {
+            for (i in 0 until length) {
+                val allTagData = AllTagData(
+                    response.itemList[i].data.title,
+                    response.itemList[i].data.image,
+                    response.itemList[i].data.id.toString()
+                )
+                list.add(allTagData)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+
+        Result.success(list)
+    }
+
+    fun loadCalender(date: String) = fire(Dispatchers.IO) {
+        val response = OpenEyeNetwork.loadCalender(date)
+        val length = response.count
+
+
+        val listCommunityRecData = mutableListOf<CommunityRecData>()
+        for (i in 3 until length) {
+            if (response.itemList[i].type == "communityColumnsCard") {
+                val communityData = CommunityRecData(
+                    response.itemList[i].data.content.data.cover.feed,
+                    response.itemList[i].data.content.data.url,
+                    response.itemList[i].data.content.data.description,
+                    response.itemList[i].data.content.data.owner.avatar,
+                    response.itemList[i].data.content.data.owner.nickname,
+                    response.itemList[i].data.content.data.consumption.collectionCount,
+                    response.nextPageUrl
+                )
+                listCommunityRecData.add(communityData)
+            }
+        }
+        val calenderData = CalenderData(
+            response.itemList[0].data.weeklyDestination,
+            response.itemList[0].data.dailyDestination,
+            response.itemList[0].data.recReason,
+            response.itemList[1].data.imageUrl,
+            response.itemList[1].data.weeklyDestination,
+            response.itemList[1].data.recReason,
+            listCommunityRecData
+        )
+
+        Result.success(calenderData)
     }
 
     private fun <T> fire(context: CoroutineContext, block: suspend () -> Result<T>) =

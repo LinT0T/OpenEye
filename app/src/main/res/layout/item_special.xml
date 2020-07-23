@@ -10,7 +10,7 @@
         android:layout_width="125dp"
         android:layout_height="125dp"
         android:scaleType="centerCrop"
-        android:src="@mipmap/me"
+        android:src="@mipmap/place_holder"
         android:layout_margin="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -19,6 +19,7 @@
 
 
     <com.lint0t.openeye.view.myview.MyRoundRectImageView
+        android:id="@+id/img_background_special_item"
         android:layout_width="125dp"
         android:layout_height="125dp"
         android:layout_margin="5dp"

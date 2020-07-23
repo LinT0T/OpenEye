@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lint0t.openeye.R
+import com.lint0t.openeye.view.activity.AllTagActivity
 import com.lint0t.openeye.view.activity.PlayVideoActivity
 import com.lint0t.openeye.view.activity.TagActivity
 import com.lint0t.openeye.view.adapter.*
@@ -45,6 +46,10 @@ class DiscoveryFragment : Fragment() {
         loadColumn()
         loadSpecial()
         loadTop()
+        tv_special_all.setOnClickListener {
+            val intent = Intent(context,AllTagActivity::class.java)
+            startActivity(intent)
+        }
         val topicLayoutManager = LinearLayoutManager(context)
         rv_discovery_topic.layoutManager = topicLayoutManager
         viewModel.topicPathData.observe(viewLifecycleOwner, Observer { result ->

@@ -22,6 +22,7 @@ class SpecialAdapter(val context: Context, val mList: List<SpecialData>?) :
         val image = view.img_special_item
         val title = view.tv_title_special_item
         val root = view.root_special_item
+        val background = view.img_background_special_item
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -39,6 +40,9 @@ class SpecialAdapter(val context: Context, val mList: List<SpecialData>?) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if (mList != null) {
             Glide.with(context).load(mList[position].url).into(holder.image)
+            if ( mList[position].title == ""){
+                holder.background.visibility = View.GONE
+            }
             holder.title.text = mList[position].title
             holder.root.setOnClickListener {
                 onItemClickListener.onItemClick(

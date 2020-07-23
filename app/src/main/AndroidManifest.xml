@@ -18,7 +18,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="n">
-        <activity android:name=".view.activity.TagActivity"></activity>
+        <activity android:name=".view.activity.CalenderActivity"></activity>
+        <activity android:name=".view.activity.AllTagActivity" />
+        <activity android:name=".view.activity.TagActivity" />
         <activity android:name=".view.activity.BigCoverActivity" />
         <activity android:name=".view.activity.SearchActivity" />
         <activity

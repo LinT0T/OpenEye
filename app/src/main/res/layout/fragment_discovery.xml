@@ -37,6 +37,7 @@
             android:textSize="22sp" />
 
         <TextView
+            android:id="@+id/tv_special_all"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"

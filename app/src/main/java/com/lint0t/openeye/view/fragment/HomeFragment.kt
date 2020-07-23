@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.ToxicBakery.viewpager.transforms.CubeOutTransformer
 import com.google.android.material.tabs.TabLayout
 import com.lint0t.openeye.R
+import com.lint0t.openeye.view.activity.CalenderActivity
 import com.lint0t.openeye.view.activity.SearchActivity
 import com.lint0t.openeye.view.adapter.MyHomeViewPagerAdapter
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -56,6 +57,10 @@ class HomeFragment : Fragment() {
         vp_home.setPageTransformer(true, CubeOutTransformer())
         img_search_home.setOnClickListener {
             val intent = Intent(activity, SearchActivity::class.java)
+            startActivity(intent)
+        }
+        img_calender_home.setOnClickListener {
+            val intent = Intent(activity, CalenderActivity::class.java)
             startActivity(intent)
         }
     }

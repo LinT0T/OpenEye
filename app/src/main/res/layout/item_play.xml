@@ -18,7 +18,7 @@
             android:layout_weight="1"
             android:layout_margin="5dp"
             android:scaleType="centerCrop"
-            android:src="@mipmap/me"
+            android:src="@mipmap/place_holder"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"

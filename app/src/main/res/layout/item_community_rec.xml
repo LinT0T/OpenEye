@@ -11,6 +11,7 @@
         android:id="@+id/img_community_rec_item"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:src="@mipmap/place_holder"
         android:scaleType="centerCrop" />
 
     <TextView
@@ -28,6 +29,7 @@
         android:paddingTop="2dp">
 
         <com.lint0t.openeye.view.myview.MyImageView
+            android:src="@mipmap/place_holder"
             android:id="@+id/img_avatar_community_rec_item"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

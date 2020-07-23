@@ -10,7 +10,7 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:scaleType="centerCrop"
-        android:src="@mipmap/me" />
+        android:src="@mipmap/place_holder" />
 
     <LinearLayout
         android:layout_width="match_parent"

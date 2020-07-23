@@ -18,7 +18,7 @@
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:scaleType="centerCrop"
-        android:src="@mipmap/me" />
+        android:src="@mipmap/place_holder" />
 
 
     <LinearLayout
