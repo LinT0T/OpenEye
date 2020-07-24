@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context=".view.activity.CalenderActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#FBFBFB"
+        android:gravity="center"
+        android:text="漫游厉"
+        android:textColor="#000"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/barColor" />
+
+    <com.donkingliang.consecutivescroller.ConsecutiveScrollerLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never">
+
+
+        <com.hanks.htextview.typer.TyperTextView
+            android:id="@+id/tv_year_calender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="15dp"
+            android:text="2020年"
+            android:textColor="#000"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:charIncrease="1"
+            app:typerSpeed="20" />
+
+        <com.hanks.htextview.typer.TyperTextView
+            android:id="@+id/tv_day_calender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="24"
+            android:textColor="#000"
+            android:textSize="75sp"
+            android:textStyle="bold"
+            app:charIncrease="1"
+            app:typerSpeed="20" />
+
+        <com.hanks.htextview.typer.TyperTextView
+            android:id="@+id/tv_month_calender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="5dp"
+            android:text="8月"
+            android:textColor="#000"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:charIncrease="1"
+            app:typerSpeed="20" />
+
+        <com.hanks.htextview.typer.TyperTextView
+            android:id="@+id/tv_week_destination_calender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingLeft="15dp"
+            android:paddingTop="5dp"
+            android:paddingRight="15dp"
+            android:text="宜出行目的地：伊斯坦布尔·土耳其"
+            android:textColor="#000"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:charIncrease="1"
+            app:typerSpeed="20" />
+
+        <com.hanks.htextview.typer.TyperTextView
+            android:id="@+id/tv_daily_destination_calender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:text="拜访蓝色清真寺"
+            app:charIncrease="1"
+            app:typerSpeed="20" />
+
+        <com.hanks.htextview.typer.TyperTextView
+            android:id="@+id/tv_rec_reason_calender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="25dp"
+            android:paddingTop="10dp"
+            android:paddingRight="25dp"
+            android:paddingBottom="5dp"
+            android:text=""
+            app:charIncrease="2"
+            app:typerSpeed="20" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/barColor" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <com.lint0t.openeye.view.myview.MyRoundRectImageView
+            android:id="@+id/img_cover_calender"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/place_holder" />
+
+        <com.hanks.htextview.typer.TyperTextView
+            android:id="@+id/tv_second_week_destination_calender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingTop="10dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="5dp"
+            android:text="第30周目的地推荐：伊斯坦布尔·土耳其"
+            android:textStyle="bold"
+            app:charIncrease="1"
+            app:typerSpeed="20" />
+
+        <com.hanks.htextview.typer.TyperTextView
+            android:id="@+id/tv_second_rec_reason_calender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingTop="10dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="5dp"
+            android:text=""
+            app:charIncrease="2"
+            app:typerSpeed="20" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/barColor" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingTop="5dp"
+            android:text="旅行精选"
+            android:textColor="#000"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_calender"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" />
+
+        <TextView
+            android:id="@+id/tv_more_calender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="加载更多"
+            android:textColor="#1296db"
+            android:textSize="17sp" />
+    </com.donkingliang.consecutivescroller.ConsecutiveScrollerLayout>
+
+</LinearLayout>
