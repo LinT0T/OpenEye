@@ -46,6 +46,10 @@
 
 ![image](https://github.com/LinT0T/OpenEye/blob/master/gif/分类.gif)
 
+![image](https://github.com/LinT0T/OpenEye/blob/master/gif/全部分类.gif)
+
+#### 由于开眼后端原因，部分分类与详情页内容不一样
+
 ### 搜索
 
 ![image](https://github.com/LinT0T/OpenEye/blob/master/gif/搜索.gif)
@@ -55,6 +59,10 @@
 ### 传统艺能，通知栏
 
 ![image](https://github.com/LinT0T/OpenEye/blob/master/gif/广播.gif)
+
+### 漫游厉
+![image](https://github.com/LinT0T/OpenEye/blob/master/gif/漫游厉.gif)
+
 
 ## 主要技术及第三方库
 
@@ -144,7 +152,7 @@ ViewPager切换动画库
 
  分类有一些不能加载或与标题不对应是开眼后端的问题，开眼返回的分类id与分类详情的id不一致，目前无法解决
  
-### 3.添加了首页右上角漫游历的功能
+### 3.添加了首页左上角漫游历的功能
 
  一个坑：ConsecutiveScroller + SmartRefreshLayout会导致recyclerview显示不全
  
