@@ -31,16 +31,23 @@ object Repository {
 
     fun loadSpecial() = fire(Dispatchers.IO) {
         val response = OpenEyeNetwork.loadDiscovery()
-        val length = response.itemList[1].data.count
+        val len = response.count
         val list = mutableListOf<SpecialData>()
-        for (i in 0 until length) {
-            val specialData = SpecialData(
-                response.itemList[1].data.itemList[i].data.image,
-                response.itemList[1].data.itemList[i].data.title,
-                response.itemList[1].data.itemList[i].data.id.toString()
-            )
-            list.add(specialData)
+        for (j in 0 until len) {
+            if (response.itemList[j].type == "specialSquareCardCollection") {
+                val length = response.itemList[j].data.count
+                for (i in 0 until length) {
+                    val specialData = SpecialData(
+                        response.itemList[j].data.itemList[i].data.image,
+                        response.itemList[j].data.itemList[i].data.title,
+                        response.itemList[j].data.itemList[i].data.id.toString()
+                    )
+                    list.add(specialData)
+                }
+                break
+            }
         }
+
 
         Result.success(list)
     }
