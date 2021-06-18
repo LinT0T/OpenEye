@@ -22,8 +22,8 @@
 
     <ImageView
         android:id="@+id/img_logo"
-        android:layout_width="136dp"
-        android:layout_height="98dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:scaleType="fitCenter"
         android:src="@mipmap/open_eye"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -34,12 +34,9 @@
     <TextView
         android:id="@+id/tv_welcome"
         android:layout_width="match_parent"
-
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
         android:gravity="center"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
         android:text="每日一图"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@id/img_welcome"

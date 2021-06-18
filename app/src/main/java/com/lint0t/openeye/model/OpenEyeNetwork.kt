@@ -12,22 +12,17 @@ import kotlin.coroutines.suspendCoroutine
 
 
 object OpenEyeNetwork {
-    private val retrofitImage = Retrofit.Builder().baseUrl("http://cn.bing.com/")
-        .addConverterFactory(GsonConverterFactory.create()).build()
-    private val coverService = retrofitImage.create(CoverService::class.java)
+    private val coverService = ServiceCreator.createImg<CoverService>()
 
-    //    private val appService = ServiceCreator.createService(AppService::class.java) //用retrofit构建器构建会有奇怪的错误，不知道为什么
-    private val retrofit = Retrofit.Builder().baseUrl(" http://baobab.kaiyanapp.com/api/")
-        .addConverterFactory(GsonConverterFactory.create()).build()
-    private val discoveryService = retrofit.create(DiscoveryService::class.java)
-    private val playVideoService = retrofit.create(PlayVideoService::class.java)
-    private val recService = retrofit.create(RecService::class.java)
-    private val searchService = retrofit.create(SearchService::class.java)
-    private val communityService = retrofit.create(CommunityService::class.java)
-    private val messageService = retrofit.create(MessageService::class.java)
-    private val tagService = retrofit.create(TagService::class.java)
-    private val allTagService = retrofit.create(AllTagService::class.java)
-    private val calenderService = retrofit.create(CalenderService::class.java)
+    private val discoveryService = ServiceCreator.create<DiscoveryService>()
+    private val playVideoService = ServiceCreator.create<PlayVideoService>()
+    private val recService = ServiceCreator.create<RecService>()
+    private val searchService = ServiceCreator.create<SearchService>()
+    private val communityService = ServiceCreator.create<CommunityService>()
+    private val messageService = ServiceCreator.create<MessageService>()
+    private val tagService = ServiceCreator.create<TagService>()
+    private val allTagService = ServiceCreator.create<AllTagService>()
+    private val calenderService = ServiceCreator.create<CalenderService>()
 
     suspend fun loadImage() = coverService.getImageData().await()
 
@@ -64,7 +59,7 @@ object OpenEyeNetwork {
 
     suspend fun loadAllTag() = allTagService.getAllTag().await()
 
-    suspend fun loadCalender(date:String) = calenderService.getCalender(date).await()
+    suspend fun loadCalender(date: String) = calenderService.getCalender(date).await()
 
     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->

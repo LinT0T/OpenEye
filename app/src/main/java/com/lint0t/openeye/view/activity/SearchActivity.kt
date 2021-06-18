@@ -20,6 +20,7 @@ import com.lint0t.openeye.viewmodel.SearchViewModel
 import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.wyt.searchbox.SearchFragment
 import kotlinx.android.synthetic.main.activity_search.*
+import kotlinx.android.synthetic.main.fragment_daily.*
 
 
 class SearchActivity : AppCompatActivity() {
@@ -33,21 +34,38 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        val initRecData = RecData("搜索感兴趣的东西吧", "", "", 0, "", "", "", "", "", "", "textCard", "")
-        recAdapter = RecAdapter(context, mutableListOf(initRecData))
+        recAdapter = RecAdapter(context, viewModel.listData)
         rv_search_search.adapter = recAdapter
-        refresh_layout_search.setEnableLoadMore(false)
-        recAdapter.notifyDataSetChanged()
+        refresh_layout_search.setEnableRefresh(false)
         val recLayoutManager = LinearLayoutManager(context)
         rv_search_search.layoutManager = recLayoutManager
+        // 搜索框框架
+        val searchFragment = SearchFragment.newInstance()
+        searchFragment.setOnSearchClickListener { keyword -> // 搜索框搜索处理
+            viewModel.loadSearch(keyword)
+            img_search_search.alpha = 0f
+            img_search_search.animate().alpha(1f).duration = 1000
+        }
+        searchFragment.showFragment( // 显示搜索框
+            supportFragmentManager,
+            SearchFragment.TAG
+        )
+        img_search_search.setOnClickListener {
+            searchFragment.showFragment(
+                supportFragmentManager,
+                SearchFragment.TAG
+            )
+        }
+
         viewModel.searchPathData.observe(this, Observer { result ->
             val list = result.getOrNull()
             if (list !== null) {
                 viewModel.listData.clear()
                 viewModel.listData.addAll(list)
-                recAdapter = RecAdapter(context, list)
-                rv_search_search.adapter = recAdapter
-                rv_search_search.adapter?.notifyDataSetChanged()
+                recAdapter.notifyDataSetChanged()
+                if (viewModel.listData[viewModel.listData.size - 1].nextUrl == null){
+                    refresh_layout_search.setEnableLoadMore(false)
+                }
                 recAdapter.setOnItemClickListener(object : RecAdapter.OnItemClickListener {
                     override fun onItemClick(view: View, position: Int) {
                         val intent = Intent(context, PlayVideoActivity::class.java)
@@ -66,43 +84,16 @@ class SearchActivity : AppCompatActivity() {
                         intent.putExtras(bundle)
                         startActivity(intent)
                     }
-
-                    override fun onItemLongClick(view: View, position: Int) {
-
-                    }
+                    override fun onItemLongClick(view: View, position: Int) {}
                 })
-                refresh_layout_search.setEnableLoadMore(true)
             } else {
-                val emptyRecData =
-                    RecData("加载失败了", "", "", 0, "", "", "", "", "", "", "textCard", "")
-                val emptyList = mutableListOf(emptyRecData)
                 viewModel.listData.clear()
-                viewModel.listData.addAll(emptyList)
-                recAdapter = RecAdapter(context, emptyList)
-                rv_search_search.adapter = recAdapter
-                rv_search_search.adapter?.notifyDataSetChanged()
                 refresh_layout_search.setEnableLoadMore(false)
-                Toast.makeText(context, "网络不太好哦", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "加载失败", Toast.LENGTH_SHORT).show()
+                result.exceptionOrNull()?.printStackTrace()
             }
         })
 
-        val searchFragment = SearchFragment.newInstance()
-        searchFragment.setOnSearchClickListener { keyword -> //这里处理逻辑
-            viewModel.loadSearch(keyword)
-            img_search_search.alpha = 0f
-            img_search_search.animate().alpha(1f).duration = 1000
-
-        }
-        searchFragment.showFragment(
-            supportFragmentManager,
-            SearchFragment.TAG
-        )
-        img_search_search.setOnClickListener {
-            searchFragment.showFragment(
-                supportFragmentManager,
-                SearchFragment.TAG
-            )
-        }
         rv_search_search.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
@@ -113,26 +104,25 @@ class SearchActivity : AppCompatActivity() {
                 }
             }
         })
+
+
+        refresh_layout_search.setRefreshFooter(ClassicsFooter(context))
+        refresh_layout_search.setOnLoadMoreListener {
+            refresh_layout_search.finishLoadMore()
+            viewModel.loadMore(viewModel.listData[viewModel.listData.size - 1].nextUrl)
+        }
+
         viewModel.morePathData.observe(this, Observer { result ->
             val list = result.getOrNull()
-            val emptyData = mutableListOf<RecData>()
-            if (list != null && list != emptyData) {
+            if (list != null && list.size > 0) {
                 viewModel.listData.addAll(list)
-                recAdapter.addMore(list)
                 recAdapter.notifyDataSetChanged()
             } else {
                 Toast.makeText(context, "已经是最后一个啦", Toast.LENGTH_SHORT).show()
                 refresh_layout_search.finishLoadMoreWithNoMoreData()
                 refresh_layout_search.setEnableLoadMore(false)
             }
-
         })
-        refresh_layout_search.setRefreshFooter(ClassicsFooter(context))
-        refresh_layout_search.setEnableRefresh(false)
-        refresh_layout_search.setOnLoadMoreListener {
-            refresh_layout_search.finishLoadMore()
-            viewModel.loadMore(viewModel.listData[viewModel.listData.size - 1].nextUrl)
-        }
     }
 
 

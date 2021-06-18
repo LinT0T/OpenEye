@@ -43,24 +43,10 @@ class DiscoveryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadBanner()
-        loadColumn()
         loadSpecial()
+        loadColumn()
         loadTop()
-        tv_special_all.setOnClickListener {
-            val intent = Intent(context,AllTagActivity::class.java)
-            startActivity(intent)
-        }
-        val topicLayoutManager = LinearLayoutManager(context)
-        rv_discovery_topic.layoutManager = topicLayoutManager
-        viewModel.topicPathData.observe(viewLifecycleOwner, Observer { result ->
-            val list = result.getOrNull()
-            if (list !== null) {
-                val topicAdapter = context?.let { TopicAdapter(it, list) }
-                rv_discovery_topic.adapter = topicAdapter
-            } else {
-                Toast.makeText(context, "主题加载失败了>_<", Toast.LENGTH_SHORT).show()
-            }
-        })
+        loadTopic()
     }
 
     private fun loadTop() {
@@ -94,7 +80,6 @@ class DiscoveryFragment : Fragment() {
         val columnLayoutManager = GridLayoutManager(context, 2)
         columnLayoutManager.orientation = GridLayoutManager.HORIZONTAL
         rv_discovery_column.layoutManager = columnLayoutManager
-        //viewModel.loadColumn()
         viewModel.columnPathData.observe(viewLifecycleOwner, Observer { result ->
             val list = result.getOrNull()
             if (list != null) {
@@ -131,6 +116,10 @@ class DiscoveryFragment : Fragment() {
                 rv_discovery_special.adapter = specialAdapter
             }
         })
+        tv_special_all.setOnClickListener {
+            val intent = Intent(context,AllTagActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun loadBanner() {
@@ -149,6 +138,20 @@ class DiscoveryFragment : Fragment() {
                     .setPages(list)
             } else {
                 Toast.makeText(context, "banner加载失败了>_<", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun loadTopic(){
+        val topicLayoutManager = LinearLayoutManager(context)
+        rv_discovery_topic.layoutManager = topicLayoutManager
+        viewModel.topicPathData.observe(viewLifecycleOwner, Observer { result ->
+            val list = result.getOrNull()
+            if (list !== null) {
+                val topicAdapter = context?.let { TopicAdapter(it, list) }
+                rv_discovery_topic.adapter = topicAdapter
+            } else {
+                Toast.makeText(context, "主题加载失败了>_<", Toast.LENGTH_SHORT).show()
             }
         })
     }

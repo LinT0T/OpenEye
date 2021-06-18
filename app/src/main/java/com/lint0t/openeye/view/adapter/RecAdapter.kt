@@ -22,6 +22,7 @@ import java.util.*
 
 class RecAdapter(val context: Context, private val mList: MutableList<RecData>?) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
     companion object {
         const val TYPE_SQUARE_CARD_COLLECTION = 1
         const val TYPE_TEXT = 2

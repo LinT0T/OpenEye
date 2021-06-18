@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         fragments.add(meFragment)
         val viewPagerAdapter = MyViewPagerAdapter(
             supportFragmentManager,
-            FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,
+            FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, //ViewPager 下实现懒加载的新思路
             fragments
         )
 
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onPageSelected(position: Int) {
-                tb_main.menu.getItem(position).isChecked = true
+                tb_main.menu.getItem(position).isChecked = true // 页面切换成功时将底部菜单栏对应 tab 更新
             }
 
             override fun onPageScrollStateChanged(state: Int) {}
@@ -83,7 +83,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initBar() {
-        //   hideBottomUIMenu(this)
         immersionBar {
             transparentStatusBar()
             transparentNavigationBar()
@@ -94,6 +93,8 @@ class MainActivity : AppCompatActivity() {
             navigationBarColor("#FBFBFB")
         }
         val params: WindowManager.LayoutParams = window.attributes
+
+        // “沉浸式”效果：Immersive full-screen mode
         params.systemUiVisibility =
             View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_IMMERSIVE
         window.attributes = params

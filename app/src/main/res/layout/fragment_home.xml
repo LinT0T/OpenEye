@@ -10,47 +10,49 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
+
         <ImageView
             android:id="@+id/img_calender_home"
             android:layout_width="0dp"
-            android:scaleType="centerInside"
-            android:src="@mipmap/calendar"
-            android:paddingRight="10dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:paddingRight="10dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/calendar" />
+
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tb_home"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="5"
-            app:tabGravity="center"
             android:background="#FBFBFB"
-            app:tabBackground="@null"
-            app:tabRippleColor="@null"
-            app:tabPaddingStart="25dp"
-            app:tabIndicatorFullWidth="false"
-            app:tabPaddingEnd="25dp"
             android:paddingTop="7dp"
             android:paddingBottom="7dp"
+            app:tabBackground="@null"
+            app:tabGravity="center"
             app:tabIndicatorColor="#272727"
-            />
+            app:tabIndicatorFullWidth="false"
+            app:tabPaddingEnd="25dp"
+            app:tabPaddingStart="25dp"
+            app:tabRippleColor="@null" />
 
         <ImageView
             android:id="@+id/img_search_home"
             android:layout_width="0dp"
-            android:scaleType="centerInside"
-            android:src="@mipmap/search"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:paddingRight="10dp"
-            android:layout_weight="1"/>
+            android:scaleType="centerInside"
+            android:src="@mipmap/search" />
     </LinearLayout>
 
-<View
-    android:layout_width="match_parent"
-    android:layout_height="1dp"
-    android:background="#F5F5F5"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#F5F5F5" />
+
     <FrameLayout
         android:id="@+id/fl_home"
         android:layout_width="match_parent"
@@ -59,8 +61,8 @@
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/vp_home"
-            android:overScrollMode="never"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:overScrollMode="never" />
     </FrameLayout>
 </LinearLayout>

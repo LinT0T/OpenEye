@@ -15,7 +15,7 @@ class DailyFragmentViewModel : ViewModel() {
     }
     private val moreLiveData = MutableLiveData<String>()
     val morePathData = Transformations.switchMap(moreLiveData) {url-> Repository.loadMoreDaily(url) }
-    fun loadMore(url:String) {
+    fun loadMore(url:String?) {
         moreLiveData.value = url
     }
 }

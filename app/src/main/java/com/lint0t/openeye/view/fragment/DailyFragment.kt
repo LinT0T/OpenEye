@@ -51,6 +51,9 @@ class DailyFragment : Fragment() {
                 recAdapter = context?.let { RecAdapter(it, list) }!!
                 rv_daily.adapter = recAdapter
                 rv_daily.adapter?.notifyDataSetChanged()
+                if (viewModel.listData[viewModel.listData.size - 1].nextUrl == null) {
+                    refresh_layout_daily.setEnableLoadMore(false)
+                }
                 recAdapter.setOnItemClickListener(object : RecAdapter.OnItemClickListener {
                     override fun onItemClick(view: View, position: Int) {
                         val intent = Intent(context, PlayVideoActivity::class.java)
@@ -112,7 +115,6 @@ class DailyFragment : Fragment() {
         refresh_layout_daily.setOnLoadMoreListener {
             refresh_layout_daily.finishLoadMore()
             viewModel.loadMore(viewModel.listData[viewModel.listData.size - 1].nextUrl)
-            println(viewModel.listData[viewModel.listData.size - 1].nextUrl)
         }
 
         rv_daily.addOnScrollListener(object : RecyclerView.OnScrollListener() {

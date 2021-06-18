@@ -15,7 +15,7 @@ class RecFragmentViewModel : ViewModel() {
     }
     private val moreLiveData = MutableLiveData<String>()
     val morePathData = Transformations.switchMap(moreLiveData) {url-> Repository.loadMore(url) }
-    fun loadMore(url:String) {
+    fun loadMore(url:String?) {
         moreLiveData.value = url
     }
 }

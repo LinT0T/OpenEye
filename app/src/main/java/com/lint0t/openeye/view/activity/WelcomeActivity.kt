@@ -1,5 +1,6 @@
 package com.lint0t.openeye.view.activity
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Build
@@ -18,7 +19,9 @@ import kotlinx.android.synthetic.main.activity_welcome.*
 
 
 class WelcomeActivity : AppCompatActivity() {
+
     private val viewModel by lazy { ViewModelProvider(this).get(WelcomeViewModel::class.java) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
@@ -39,7 +42,6 @@ class WelcomeActivity : AppCompatActivity() {
                 Glide.with(this@WelcomeActivity)
                     .load(path)
                     .into(img_welcome)
-                //   img_logo.animate().alpha(0f).duration=5000
                 img_welcome.animate()
                     .alpha(1f).duration = 1000
                 img_welcome.animate()
@@ -55,32 +57,26 @@ class WelcomeActivity : AppCompatActivity() {
 
         val handler = Handler()
         val runnable = Runnable {
-            val intent = Intent()
-            intent.setClass(
-                this@WelcomeActivity,
-                MainActivity::class.java
-            )
-            startActivity(intent)
+            startActivity(Intent(this@WelcomeActivity,MainActivity::class.java))
             finish()
         }
         handler.postDelayed(runnable, 5000)
     }
 
+    @SuppressLint("ObsoleteSdkInt")
+    // 隐藏虚拟按键且全屏
     fun hideBottomUIMenu(a: Activity) {
-        //隐藏虚拟按键，并且全屏
-        if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
-            val v = a.window.decorView
-            v.systemUiVisibility = View.GONE
-        } else if (Build.VERSION.SDK_INT >= 19) {
-            //for new api versions.
-            val decorView = a.window.decorView
+        val decorView = a.window.decorView
+        if (Build.VERSION.SDK_INT <= 18) {
+            decorView.systemUiVisibility = View.GONE
+        } else {
             val uiOptions = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                     or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                     or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
-                    //                    | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                    or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                     or View.SYSTEM_UI_FLAG_IMMERSIVE)
             decorView.systemUiVisibility = uiOptions
+            // 沉浸式状态栏
             a.window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
         }
     }

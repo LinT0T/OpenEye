@@ -14,6 +14,6 @@ data class RecData(
     val blurred: String,
     val avatar:String,
     val type: String,
-    val nextUrl:String
+    val nextUrl:String?
 ) :Serializable{
 }

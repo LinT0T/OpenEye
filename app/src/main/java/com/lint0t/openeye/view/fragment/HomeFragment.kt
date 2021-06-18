@@ -26,7 +26,6 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
@@ -45,16 +44,18 @@ class HomeFragment : Fragment() {
             FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,
             fragments
         )
+
         vp_home.adapter = viewPagerAdapter
         vp_home.offscreenPageLimit = 3
-        tb_home.setupWithViewPager(vp_home)
-        tb_home.tabMode = TabLayout.MODE_FIXED
+        tb_home.setupWithViewPager(vp_home) // tab 绑定 viewPager
+        tb_home.tabMode = TabLayout.MODE_FIXED  // 固定 tabs，并同时显示所有的 tabs
 
         tb_home.getTabAt(0)?.text = "发现"
         tb_home.getTabAt(1)?.text = "推荐"
         tb_home.getTabAt(2)?.text = "日报"
         vp_home.setCurrentItem(1, false)
-        vp_home.setPageTransformer(true, CubeOutTransformer())
+        vp_home.setPageTransformer(true, CubeOutTransformer()) // 设置切换动画
+
         img_search_home.setOnClickListener {
             val intent = Intent(activity, SearchActivity::class.java)
             startActivity(intent)

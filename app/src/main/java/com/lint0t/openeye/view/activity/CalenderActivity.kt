@@ -31,10 +31,11 @@ class CalenderActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_calender)
         initBar()
-        val staggeredGridLayoutManager =
-            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        val staggeredGridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         staggeredGridLayoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
         rv_calender.layoutManager = staggeredGridLayoutManager
+        communityRecAdapter = CommunityRecAdapter(this, viewModel.listData)
+        rv_calender.adapter = communityRecAdapter
         val now = System.currentTimeMillis()
         val form = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         form.timeZone = TimeZone.getTimeZone("GMT+08:00")
@@ -60,7 +61,6 @@ class CalenderActivity : AppCompatActivity() {
                 tv_second_week_destination_calender.animateText(calenderData.weeklyDestination2)
                 tv_second_rec_reason_calender.animateText(calenderData.recReason2)
                 Glide.with(this).load(calenderData.imageUrl).into(img_cover_calender)
-                communityRecAdapter = CommunityRecAdapter(this, list)
                 communityRecAdapter.setOnItemClickListener(object :
                     CommunityRecAdapter.OnItemClickListener {
                     override fun onItemClick(view: View, position: Int) {
@@ -73,23 +73,11 @@ class CalenderActivity : AppCompatActivity() {
 
                     }
                 })
-                rv_calender.adapter = communityRecAdapter
                 rv_calender.adapter?.notifyDataSetChanged()
             } else {
-                val emptyList = mutableListOf<CommunityRecData>()
-                communityRecAdapter = CommunityRecAdapter(context, emptyList)
-                communityRecAdapter.setOnItemClickListener(object :
-                    CommunityRecAdapter.OnItemClickListener {
-                    override fun onItemClick(view: View, position: Int) {
-                    }
-
-                    override fun onItemLongClick(view: View, position: Int) {
-
-                    }
-                })
-                rv_calender.adapter = communityRecAdapter
+                viewModel.listData.clear()
                 rv_calender.adapter?.notifyDataSetChanged()
-                Log.e("community rec", "list is null")
+                Toast.makeText(context,"加载失败",Toast.LENGTH_SHORT).show()
             }
 
         })
@@ -97,20 +85,19 @@ class CalenderActivity : AppCompatActivity() {
 
         viewModel.morePathData.observe(this, androidx.lifecycle.Observer { result ->
             val list = result.getOrNull()
-            val emptyData = mutableListOf<CommunityRecData>()
-            if (list != null && list != emptyData) {
+            if (list != null && list.size >  0) {
                 viewModel.listData.addAll(list)
-                communityRecAdapter.addMore(list)
                 communityRecAdapter.notifyDataSetChanged()
             } else {
                 Toast.makeText(context, "已经是最后一个啦", Toast.LENGTH_SHORT).show()
-
             }
 
         })
+
+        //使用smartRefreshLayout会显示不全
         tv_more_calender.setOnClickListener {
             viewModel.loadMore(viewModel.listData[viewModel.listData.size - 1].nextUrl)
-        }   //使用smartRefreshLayout会显示不全
+        }
 
     }
     private fun initBar() {

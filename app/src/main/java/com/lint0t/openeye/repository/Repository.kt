@@ -1,5 +1,6 @@
 package com.lint0t.openeye.repository
 
+import android.util.Log
 import androidx.lifecycle.liveData
 import com.lint0t.openeye.bean.*
 import com.lint0t.openeye.model.OpenEyeNetwork
@@ -386,11 +387,10 @@ object Repository {
                 val recData = RecData(
                     response.itemList[i].data.text,
                     "", "", 0, "", "", "", "", "", "", response.itemList[i].type,
-                    response.nextPageUrl
+                    response.nextPageUrl?:""
                 )
                 list.add(recData)
             }
-
             if (response.itemList[i].type == "banner2") {
                 val recData = RecData(
                     "",
@@ -442,7 +442,6 @@ object Repository {
                 )
                 list.add(recData)
             }
-
             if (response.itemList[i].type == "briefCard") {
                 val recData = RecData(
                     "",
@@ -461,7 +460,6 @@ object Repository {
                 list.add(recData)
             }
         }
-
         Result.success(list)
     }
 
@@ -891,10 +889,10 @@ object Repository {
     }
 
     fun loadCalender(date: String) = fire(Dispatchers.IO) {
-        val response = OpenEyeNetwork.loadCalender(date)
+//        val response = OpenEyeNetwork.loadCalender(date)
+        // 为修复接口目前时间返回结果变化采取固定时间方式
+        val response = OpenEyeNetwork.loadCalender("2020-08-31")
         val length = response.count
-
-
         val listCommunityRecData = mutableListOf<CommunityRecData>()
         for (i in 3 until length) {
             if (response.itemList[i].type == "communityColumnsCard") {
@@ -910,6 +908,7 @@ object Repository {
                 listCommunityRecData.add(communityData)
             }
         }
+
         val calenderData = CalenderData(
             response.itemList[0].data.weeklyDestination,
             response.itemList[0].data.dailyDestination,
@@ -919,7 +918,6 @@ object Repository {
             response.itemList[1].data.recReason,
             listCommunityRecData
         )
-
         Result.success(calenderData)
     }
 

@@ -24,6 +24,7 @@ import com.scwang.smart.refresh.header.ClassicsHeader
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
+import kotlinx.android.synthetic.main.activity_search.*
 import kotlinx.android.synthetic.main.fragment_discovery.*
 import kotlinx.android.synthetic.main.fragment_rec.*
 
@@ -57,6 +58,9 @@ class RecFragment : Fragment() {
                 recAdapter = context?.let { RecAdapter(it, list) }!!
                 rv_rec.adapter = recAdapter
                 rv_rec.adapter?.notifyDataSetChanged()
+                if (viewModel.listData[viewModel.listData.size - 1].nextUrl == null){
+                    refresh_layout.setEnableLoadMore(false)
+                }
                 recAdapter.setOnItemClickListener(object : RecAdapter.OnItemClickListener {
                     override fun onItemClick(view: View, position: Int) {
                         val intent = Intent(context, PlayVideoActivity::class.java)
@@ -114,7 +118,7 @@ class RecFragment : Fragment() {
         })
         refresh_layout.setOnLoadMoreListener {
             refresh_layout.finishLoadMore()
-                viewModel.loadMore(viewModel.listData[viewModel.listData.size - 1].nextUrl)
+            viewModel.loadMore(viewModel.listData[viewModel.listData.size - 1].nextUrl)
         }
 
         rv_rec.addOnScrollListener(object : RecyclerView.OnScrollListener(){
