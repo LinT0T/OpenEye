@@ -19,6 +19,7 @@ import com.lint0t.openeye.viewmodel.TagViewModel
 import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.ClassicsHeader
 import kotlinx.android.synthetic.main.activity_tag.*
+import kotlinx.android.synthetic.main.item_message.*
 
 class TagActivity : AppCompatActivity() {
     private val viewModel by lazy { ViewModelProvider(this).get(TagViewModel::class.java) }
@@ -32,8 +33,36 @@ class TagActivity : AppCompatActivity() {
     private fun init() {
         val linearLayoutManager = LinearLayoutManager(this)
         rv_tag.layoutManager = linearLayoutManager
+        tagRecAdapter = TagRecAdapter(this, viewModel.listData)
+        rv_tag.adapter = tagRecAdapter
         val id = intent.getStringExtra("id")
         viewModel.loadTagInfo(id ?: "30")
+
+        tagRecAdapter.setOnItemClickListener(object : TagRecAdapter.OnItemClickListener {
+            override fun onItemClick(view: View, position: Int) {
+                val intent = Intent(this@TagActivity, PlayVideoActivity::class.java)
+                val bundle = Bundle()
+                val topData = TopData(
+                    viewModel.listData[position].url,
+                    viewModel.listData[position].playUrl,
+                    viewModel.listData[position].time,
+                    viewModel.listData[position].title,
+                    viewModel.listData[position].author,
+                    viewModel.listData[position].description ?: "",
+                    viewModel.listData[position].id,
+                    viewModel.listData[position].blurred
+                )
+                bundle.putSerializable("data", topData)
+                intent.putExtras(bundle)
+                startActivity(intent)
+            }
+
+            override fun onItemLongClick(view: View, position: Int) {
+
+            }
+        })
+
+
         viewModel.tagPathData.observe(this, Observer { result ->
             val list = result.getOrNull()
             if (list != null) {
@@ -49,32 +78,7 @@ class TagActivity : AppCompatActivity() {
             if (list != null) {
                 viewModel.listData.clear()
                 viewModel.listData.addAll(list)
-                tagRecAdapter = TagRecAdapter(this, list)
-                rv_tag.adapter = tagRecAdapter
                 rv_tag.adapter?.notifyDataSetChanged()
-                tagRecAdapter.setOnItemClickListener(object : TagRecAdapter.OnItemClickListener {
-                    override fun onItemClick(view: View, position: Int) {
-                        val intent = Intent(this@TagActivity, PlayVideoActivity::class.java)
-                        val bundle = Bundle()
-                        val topData = TopData(
-                            list[position].url,
-                            list[position].playUrl,
-                            list[position].time,
-                            list[position].title,
-                            list[position].author,
-                            list[position].description ?: "",
-                            list[position].id,
-                            list[position].blurred
-                        )
-                        bundle.putSerializable("data", topData)
-                        intent.putExtras(bundle)
-                        startActivity(intent)
-                    }
-
-                    override fun onItemLongClick(view: View, position: Int) {
-
-                    }
-                })
             } else {
                 val emptyRecData = TagRecData(
                     "加载失败了,下拉刷新试试",
@@ -94,27 +98,15 @@ class TagActivity : AppCompatActivity() {
                 val emptyList = mutableListOf(emptyRecData)
                 viewModel.listData.clear()
                 viewModel.listData.addAll(emptyList)
-                tagRecAdapter = TagRecAdapter(context, emptyList)
-                rv_tag.adapter = tagRecAdapter
                 rv_tag.adapter?.notifyDataSetChanged()
                 refresh_layout_tag.setEnableLoadMore(false)
                 Toast.makeText(context, "网络不太好哦，加载失败了>_<", Toast.LENGTH_SHORT).show()
             }
         })
-        refresh_layout_tag.setRefreshHeader(ClassicsHeader(context))
-        refresh_layout_tag.setRefreshFooter(ClassicsFooter(context))
-        refresh_layout_tag.setOnRefreshListener {
-            refresh_layout_tag.finishRefresh()
-            viewModel.loadTagInfo(id?:"0")
-            refresh_layout_tag.setEnableLoadMore(true)
-        }
-
         viewModel.morePathData.observe(this, Observer { result ->
             val list = result.getOrNull()
-            val emptyData = mutableListOf<TagRecData>()
-            if (list != null && list != emptyData) {
+            if (list != null && list.size > 0) {
                 viewModel.listData.addAll(list)
-                tagRecAdapter.addMore(list)
                 tagRecAdapter.notifyDataSetChanged()
             } else {
                 Toast.makeText(context, "已经是最后一个啦", Toast.LENGTH_SHORT).show()
@@ -123,6 +115,15 @@ class TagActivity : AppCompatActivity() {
             }
 
         })
+
+        refresh_layout_tag.setRefreshHeader(ClassicsHeader(context))
+        refresh_layout_tag.setRefreshFooter(ClassicsFooter(context))
+        refresh_layout_tag.setOnRefreshListener {
+            refresh_layout_tag.finishRefresh()
+            viewModel.loadTagInfo(id ?: "30")
+            refresh_layout_tag.setEnableLoadMore(true)
+        }
+
         refresh_layout_tag.setOnLoadMoreListener {
             refresh_layout_tag.finishLoadMore()
             viewModel.loadMore(viewModel.listData[viewModel.listData.size - 1].nextUrl)

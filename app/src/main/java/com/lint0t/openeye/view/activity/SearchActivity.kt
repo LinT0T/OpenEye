@@ -57,35 +57,37 @@ class SearchActivity : AppCompatActivity() {
             )
         }
 
+        recAdapter.setOnItemClickListener(object : RecAdapter.OnItemClickListener {
+            override fun onItemClick(view: View, position: Int) {
+                val intent = Intent(context, PlayVideoActivity::class.java)
+                val bundle = Bundle()
+                val topData = TopData(
+                    viewModel.listData[position].url,
+                    viewModel.listData[position].playUrl,
+                    viewModel.listData[position].time,
+                    viewModel.listData[position].title,
+                    viewModel.listData[position].author,
+                    viewModel.listData[position].description ?: "",
+                    viewModel.listData[position].id,
+                    viewModel.listData[position].blurred
+                )
+                bundle.putSerializable("data", topData)
+                intent.putExtras(bundle)
+                startActivity(intent)
+            }
+
+            override fun onItemLongClick(view: View, position: Int) {}
+        })
+
         viewModel.searchPathData.observe(this, Observer { result ->
             val list = result.getOrNull()
             if (list !== null) {
                 viewModel.listData.clear()
                 viewModel.listData.addAll(list)
                 recAdapter.notifyDataSetChanged()
-                if (viewModel.listData[viewModel.listData.size - 1].nextUrl == null){
+                if (viewModel.listData[viewModel.listData.size - 1].nextUrl == null) {
                     refresh_layout_search.setEnableLoadMore(false)
                 }
-                recAdapter.setOnItemClickListener(object : RecAdapter.OnItemClickListener {
-                    override fun onItemClick(view: View, position: Int) {
-                        val intent = Intent(context, PlayVideoActivity::class.java)
-                        val bundle = Bundle()
-                        val topData = TopData(
-                            list[position].url,
-                            list[position].playUrl,
-                            list[position].time,
-                            list[position].title,
-                            list[position].author,
-                            list[position].description ?: "",
-                            list[position].id,
-                            list[position].blurred
-                        )
-                        bundle.putSerializable("data", topData)
-                        intent.putExtras(bundle)
-                        startActivity(intent)
-                    }
-                    override fun onItemLongClick(view: View, position: Int) {}
-                })
             } else {
                 viewModel.listData.clear()
                 refresh_layout_search.setEnableLoadMore(false)
